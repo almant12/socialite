@@ -14,11 +14,12 @@ class Message extends Model
 
 
 
-    public function senderProfile():BelongsTo{
-        return $this->belongsTo(User::class,'sender_id','id')->select(['id','avatar','name']);
+    public function senderProfile(): BelongsTo {
+        return $this->belongsTo(User::class, 'sender_id', 'id')->select(['id', 'avatar', 'name']);
     }
-
-    public function receiverProfile():BelongsTo{
-        return $this->belongsTo(User::class,'receiver_id','id')->select(['id','avatar','name']);
+    
+    public function receiverProfile(): BelongsTo {
+        return $this->belongsTo(User::class, 'receiver_id', 'id')->select(['id', 'avatar', 'name']);
     }
+    
 }
