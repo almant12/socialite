@@ -45,7 +45,5 @@ class AuthSocialiteController extends Controller
             return response()->json(['error' => 'Authentication failed'], 401);
         }
     }
-    public function authUser(){
-        dd(auth('sanctum')->user());
-    }
+ 
 }
