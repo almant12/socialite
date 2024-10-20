@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Message;
 use App\Models\User;
-use Illuminate\Http\JsonResponse;
+use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
@@ -30,6 +31,7 @@ class MessageController extends Controller
         ->where('sender_id',$authUserId)
         ->where('receiver_id','!=',$authUserId)
         ->groupBy('receiver_id');
+        
 
         // Combine both sender and receiver users
         $chatUsers = $senderUsers->union($receiverUsers)->get()->map(function($user) {
