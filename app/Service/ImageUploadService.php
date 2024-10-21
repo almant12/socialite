@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 
  class ImageUploadService{
@@ -23,23 +24,30 @@ use Illuminate\Support\Facades\Http;
         }
     }
 
-    public function saveImageFromUrl($urlImage,$path){
-
-        try{
-            $imageContents = Http::get($urlImage);
-
-            if($imageContents->successful()){
-
-                $imageName = 'image_'.uniqid().'.'.'.jpg';
-                $pathImage = $imageContents->storeAs($path,$imageName,'public');
-                return 'storage/'.$pathImage;
-            }else{
-                throw new \Exception('Failed to download image from url');
+    public function saveImageFromUrl($urlImage, $path)
+    {
+        try {
+            $imageResponse = Http::get($urlImage);
+    
+            if ($imageResponse->successful()) {
+                // Get the image contents as a string
+                $imageContents = $imageResponse->body();
+                
+                // Create a unique image name
+                $imageName = 'image_' . uniqid() . '.jpg';
+    
+                // Save the image using Laravel's storage facade
+                Storage::disk('public')->put($path . '/' . $imageName, $imageContents);
+    
+                return 'storage/' . $path . '/' . $imageName;
+            } else {
+                throw new \Exception('Failed to download image from URL');
             }
-        }catch(Exception $e){
-            return response()->json(['error'=>$e->getMessage()],500);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+    
     public function updateImage(Request $request,$filename,$oldPath,$path): string{
 
         if($request->hasFile($filename)){

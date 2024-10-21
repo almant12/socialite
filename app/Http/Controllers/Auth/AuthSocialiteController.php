@@ -30,7 +30,7 @@ class AuthSocialiteController extends Controller
 
         $githubUser = Socialite::driver('github')->stateless()->user();
 
-        dd($this->imageUpload->storeImageFromUrl($githubUser->getAvatar(),'imagess'));
+        dd($githubUser);
 
         $socialAccount = SocialAccount::where('provider_id',$githubUser->getId())
         ->where('provider_name','github')
@@ -38,7 +38,7 @@ class AuthSocialiteController extends Controller
 
         if($socialAccount){
             $socialAccount->update([
-                'token'=>$githubUser->token
+                'token'=>$githubUser->token,
             ]);
         }else{
             $user = User::updateOrCreate([
