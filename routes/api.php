@@ -14,5 +14,5 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('message',[MessageController::class,'index']);
 });
 
-Route::get('github',[AuthSocialiteController::class,'redirect']);
-Route::get('callback',[AuthSocialiteController::class,'callback']);
+Route::get('github',[AuthSocialiteController::class,'githubRedirect']);
+Route::get('callback',[AuthSocialiteController::class,'githubCallback']);
