@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Storage;
         }
     }
 
-    public function saveImageFromUrl($urlImage, $path)
+    public function saveImageFromUrl($urlImage, $path):string
     {
         try {
             $imageResponse = Http::get($urlImage);
