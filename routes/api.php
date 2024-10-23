@@ -11,7 +11,8 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 
 Route::middleware(['auth:sanctum'])->group(function(){
-    Route::get('message',[MessageController::class,'index']);
+    Route::get('user-message',[MessageController::class,'index']);
+    Route::get('message/{id}',[MessageController::class,'getMessage']);
 });
 
 Route::get('github',[AuthSocialiteController::class,'githubRedirect']);

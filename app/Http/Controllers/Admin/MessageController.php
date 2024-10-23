@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
+
 use App\Models\Message;
-use Illuminate\Http\Request;
+
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,5 +44,18 @@ class MessageController extends Controller
         });
 
         return response()->json($chatUsers);
+    }
+
+
+    public function getMessage(string $id){
+
+        $authUserId = Auth::user()->id;
+
+        $messages = Message::whereIn('receiver_id',[$authUserId,$id])
+        ->whereIn('sender_id',[$authUserId,$id])
+        ->orderBy('created_at', 'asc')
+        ->get();
+
+        return response()->json($messages);
     }
 }
