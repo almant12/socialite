@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthSocialiteController;
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
+    return response()->json(['status'=>'success'],200);
 });
 
 Route::middleware(['auth:sanctum'])->group(function(){
