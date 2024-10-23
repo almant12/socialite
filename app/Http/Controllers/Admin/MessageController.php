@@ -53,6 +53,7 @@ class MessageController extends Controller
 
         $messages = Message::whereIn('receiver_id',[$authUserId,$id])
         ->whereIn('sender_id',[$authUserId,$id])
+        ->with(['senderProfile','receiverProfile'])
         ->orderBy('created_at', 'asc')
         ->get();
 
