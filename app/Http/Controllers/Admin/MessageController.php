@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 
+use App\Events\MessageSent;
 use App\Models\Message;
 
 use Illuminate\Http\JsonResponse;
@@ -47,12 +48,24 @@ class MessageController extends Controller
         return response()->json($chatUsers);
     }
 
-    public function sendMessage(Request $request,string $id){
+    public function sendMessage(Request $request,string $receiverId){
         
+        $authUserId = Auth::user()->id;
         $request->validate([
             'message'=>['required']
         ]);
+        
+        $message = new Message();
+        $message->sender_id = $authUserId;
+        $message->receiver_id = $receiverId;
+        $message->message = $request->message;
+        $message->save();
 
+        broadcast(new MessageSent($receiverId,$request->message));
+
+        return response()->json([
+            'message'=>'Message has sent successfully'
+        ]);
     }
 
 

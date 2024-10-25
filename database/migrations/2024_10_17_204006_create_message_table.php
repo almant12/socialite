@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('sender_id');
             $table->unsignedBigInteger('receiver_id');
             $table->text('message');
-            $table->date('seen');
+            $table->date('seen')->nullable();
 
             $table->foreign('sender_id')->references('id')->on('users');
             $table->foreign('receiver_id')->references('id')->on('users');
