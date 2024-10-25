@@ -7,6 +7,7 @@ use App\Models\Message;
 
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
@@ -46,8 +47,16 @@ class MessageController extends Controller
         return response()->json($chatUsers);
     }
 
+    public function sendMessage(Request $request,string $id){
+        
+        $request->validate([
+            'message'=>['required']
+        ]);
 
-    public function getMessage(string $id){
+    }
+
+
+    public function getMessage(string $id):JsonResponse{
 
         $authUserId = Auth::user()->id;
 

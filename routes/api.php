@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Admin\MessageController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthSocialiteController;
 
